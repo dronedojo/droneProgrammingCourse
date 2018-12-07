@@ -1,0 +1,49 @@
+#!/bin/bash
+
+##Make sure the ports we want to use are cleared
+echo *****READ ME****
+echo ---Attempting to clear out processes on ports that we want to use---
+echo ---If any programs stay open after this script, simply execute---
+echo ---launchSitl again and let it run to completion.---
+echo "****************"
+echo ''
+echo ''
+
+
+kill -9 $(ps -eF | grep QG | awk -F' ' '{print $2}') 2&>1 >/dev/null
+kill -9 $(ps -eF | grep ardu | awk -F' ' '{print $2}') 2&>1 >/dev/null
+kill -9 $(ps -eF | grep mav | awk -F' ' '{print $2}') 2&>1 >/dev/null
+kill -9 $(ps -eF | grep apm | awk -F' ' '{print $2}') 2&>1 >/dev/null
+
+##Start SITL instance
+/usr/local/bin/dronekit-sitl copter --home=44.5013,-88.0622,0,180&
+PIDapm=$!
+
+sleep 2
+
+##Launch QGRoundControl
+/usr/local/bin/QGC.AppImage 2>/dev/null&
+PIDqgc=$!
+
+
+##Start MAVProxy
+screen -dm mavproxy.py --master=tcp:127.0.0.1:5760 --out=127.0.0.1:14550 --out=127.0.0.1:5762
+
+sleep 3
+
+/usr/bin/python "$1" --connect tcp:127.0.0.1:5762
+
+
+
+function finish {
+	kill $PIDapm 2&>1 >/dev/null
+	kill -9 $(ps -eF | grep QG | awk -F' ' '{print $2}') 2&>1 >/dev/null
+	kill -9 $(ps -eF | grep ardu | awk -F' ' '{print $2}') 2&>1 >/dev/null
+	kill -9 $(ps -eF | grep mav | awk -F' ' '{print $2}') 2&>1 >/dev/null
+        kill -9 $(ps -eF | grep apm | awk -F' ' '{print $2}') 2&>1 >/dev/null
+}
+
+##Attempt to clear out ports once we are done with launchSitl (If we miss here, the 
+##next startup of launchSitl should clear them out
+echo ---Attempting to close out processes and clear out ports---
+trap finish EXIT
