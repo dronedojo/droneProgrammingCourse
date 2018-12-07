@@ -1,7 +1,12 @@
 #!/bin/bash
+#################READ ME########################
+###YOU WILL HAVE TO CHANGE THE PATHS OF PROGRAMS IN THIS SCRIPT
+##TO MATCH PATHS OF YOUR LOCAL SYSTEM, OR THIS WON'T WORK!
+
+
 
 ##Make sure the ports we want to use are cleared
-echo *****READ ME****
+echo *****HEY YOU!****
 echo ---Attempting to clear out processes on ports that we want to use---
 echo ---If any programs stay open after this script, simply execute---
 echo ---launchSitl again and let it run to completion.---
@@ -45,5 +50,6 @@ function finish {
 
 ##Attempt to clear out ports once we are done with launchSitl (If we miss here, the 
 ##next startup of launchSitl should clear them out
+echo ''
 echo ---Attempting to close out processes and clear out ports---
 trap finish EXIT
