@@ -1,4 +1,4 @@
-######DEPENDENCIES############
+##########DEPENDENCIES#############
 
 from dronekit import connect, VehicleMode,LocationGlobalRelative,APIException
 import time
@@ -7,7 +7,8 @@ import exceptions
 import math
 import argparse
 
-############FUNCTIONS###########
+
+#########FUNCTIONS#################
 
 def connectMyCopter():
 
@@ -26,12 +27,14 @@ def connectMyCopter():
 
 	return vehicle
 
-##########MAIN EXECUTABLE#######
+
+
+##########MAIN EXECUTABLE###########
 
 vehicle = connectMyCopter()
 
 while vehicle.is_armable!=True:
-	print("Waiting for vehicle to become armable")
+	print("Waiting for vehicle to become armable.")
 	time.sleep(1)
 print("Vehicle is now armable")
 
@@ -44,30 +47,7 @@ print("Vehicle now in GUIDED MODE. Have fun!!")
 
 vehicle.armed = True
 while vehicle.armed==False:
-	print("Waiting for vehicle to become armed")
+	print("Waiting for vehicle to become armed.")
 	time.sleep(1)
 print("Look out! Virtual props are spinning!!")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

@@ -1,4 +1,4 @@
-######DEPENDENCIES############
+##########DEPENDENCIES#############
 
 from dronekit import connect, VehicleMode,LocationGlobalRelative,APIException
 import time
@@ -7,7 +7,8 @@ import exceptions
 import math
 import argparse
 
-############FUNCTIONS###########
+
+#########FUNCTIONS#################
 
 def connectMyCopter():
 
@@ -26,7 +27,9 @@ def connectMyCopter():
 
 	return vehicle
 
-##########MAIN EXECUTABLE#######
+
+
+##########MAIN EXECUTABLE###########
 
 vehicle = connectMyCopter()
 
@@ -40,11 +43,11 @@ print('Supports set attitude from companion: %s'%vehicle.capabilities.set_attitu
 #Read actual position
 print('Position: %s'%vehicle.location.global_relative_frame)
 
-#read the actual attitude roll, pitch, yaw
+#Read the actual attitude roll, pitch, yaw
 print('Attitude: %s'%vehicle.attitude)
 
-#read the actual velocity (m/s)
-print('Velocity: %s'%vehicle.velocity) #North,East,Down
+#Read the actual velocity (m/s)
+print('Velocity: %s'%vehicle.velocity) #NED: North East Down convention
 
 #When did we receive last heartbeat
 print('Last Heartbeat: %s'%vehicle.last_heartbeat)
@@ -52,16 +55,17 @@ print('Last Heartbeat: %s'%vehicle.last_heartbeat)
 #Is the vehicle good to arm
 print('Is the vehicle armable: %s'%vehicle.is_armable)
 
-#WHat is total groundspeed
-print('Groundspeed: %s',vehicle.groundspeed) #This is settable
+#What is total groundspeed
+print('Groundspeed: %s'%vehicle.groundspeed) #This is settable
 
 #What is the actual flight mode
-print('Mode: %s'%vehicle.mode.name)           #This is settable
+print('Mode: %s'%vehicle.mode.name) 	     #This is settable
 
 #Is the vehicle armed
-print('Armed: %s'%vehicle.armed)              #This is settable
+print('Armed: %s'%vehicle.armed) 	     #This is settable
 
 #Is state estimation filter ok
 print('EKF Ok: %s'%vehicle.ekf_ok)
 
 vehicle.close()
+

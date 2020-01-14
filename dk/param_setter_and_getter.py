@@ -1,4 +1,4 @@
-######DEPENDENCIES############
+##########DEPENDENCIES#############
 
 from dronekit import connect, VehicleMode,LocationGlobalRelative,APIException
 import time
@@ -7,7 +7,8 @@ import exceptions
 import math
 import argparse
 
-############FUNCTIONS###########
+
+#########FUNCTIONS#################
 
 def connectMyCopter():
 
@@ -26,7 +27,9 @@ def connectMyCopter():
 
 	return vehicle
 
-##########MAIN EXECUTABLE#######
+
+
+##########MAIN EXECUTABLE###########
 
 vehicle = connectMyCopter()
 
@@ -38,4 +41,6 @@ if vehicle.parameters['GPS_TYPE']!=4:
 	vehicle.parameters['GPS_TYPE']=4
 	gps_type = vehicle.parameters['GPS_TYPE']
 
+
 print("GPS_TYPE param value is %s"%str(gps_type))
+

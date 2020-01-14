@@ -1,4 +1,4 @@
-######DEPENDENCIES############
+##########DEPENDENCIES#############
 
 from dronekit import connect, VehicleMode,LocationGlobalRelative,APIException
 import time
@@ -7,7 +7,8 @@ import exceptions
 import math
 import argparse
 
-############FUNCTIONS###########
+
+#########FUNCTIONS#################
 
 def connectMyCopter():
 
@@ -26,7 +27,8 @@ def connectMyCopter():
 
 	return vehicle
 
-##########MAIN EXECUTABLE#######
+
+
+##########MAIN EXECUTABLE###########
 
 vehicle = connectMyCopter()
-

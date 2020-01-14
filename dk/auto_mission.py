@@ -1,4 +1,4 @@
-######DEPENDENCIES############
+##########DEPENDENCIES#############
 
 from dronekit import connect, VehicleMode,LocationGlobalRelative,APIException,Command
 import time
@@ -8,7 +8,7 @@ import math
 import argparse
 from pymavlink import mavutil
 
-############FUNCTIONS###########
+#########FUNCTIONS#################
 
 def connectMyCopter():
 
@@ -29,7 +29,7 @@ def connectMyCopter():
 
 def arm_and_takeoff(targetHeight):
 	while vehicle.is_armable!=True:
-		print("Waiting for vehicle to become armable")
+		print("Waiting for vehicle to become armable.")
 		time.sleep(1)
 	print("Vehicle is now armable")
 
@@ -42,7 +42,7 @@ def arm_and_takeoff(targetHeight):
 
 	vehicle.armed = True
 	while vehicle.armed==False:
-		print("Waiting for vehicle to become armed")
+		print("Waiting for vehicle to become armed.")
 		time.sleep(1)
 	print("Look out! Virtual props are spinning!!")
 
@@ -54,14 +54,16 @@ def arm_and_takeoff(targetHeight):
 			break
 		time.sleep(1)
 	print("Target altitude reached!!")
+
 	return None
 
-##########MAIN EXECUTABLE#######
+
+##########MAIN EXECUTABLE###########
 
 vehicle = connectMyCopter()
 
 ##Command template
-#Command(0,0,0,FrameOfReference,MAVLinkCommand,CurrentWP,AutoContinue,param1,param2,param3,param4,param5,param6,param7)
+#Command(0,0,0,FrameOfReference,MAVLinkCommand,CurrentWP,AutoContinue,param1,param2,param3,param4,param5,parm6,param7)
 
 wphome=vehicle.location.global_relative_frame
 
@@ -71,7 +73,7 @@ cmd2=Command(0,0,0,mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT,mavutil.mavlink
 cmd3=Command(0,0,0,mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT,mavutil.mavlink.MAV_CMD_NAV_WAYPOINT,0,0,0,0,0,0,44.501746,-88.062242,10)
 cmd4=Command(0,0,0,mavutil.mavlink.MAV_FRAME_GLOBAL_RELATIVE_ALT,mavutil.mavlink.MAV_CMD_NAV_RETURN_TO_LAUNCH,0,0,0,0,0,0,0,0,0)
 
-##Downoad current list of commands FROM the drone were connected to
+##Donload current list of commands FROM the drone we're connected to
 cmds = vehicle.commands
 cmds.download()
 cmds.wait_ready()
@@ -90,7 +92,7 @@ vehicle.commands.upload()
 
 arm_and_takeoff(10)
 
-print("after arm and takeoff")
+print("After arm and takeoff")
 vehicle.mode = VehicleMode("AUTO")
 while vehicle.mode!="AUTO":
 	time.sleep(.2)
@@ -98,16 +100,5 @@ while vehicle.mode!="AUTO":
 while vehicle.location.global_relative_frame.alt>2:
 	print("Drone is executing mission, but we can still run code")
 	time.sleep(2)
-
-
-
-
-
-
-
-
-
-
-
 
 

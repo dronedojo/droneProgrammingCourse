@@ -1,4 +1,4 @@
-######DEPENDENCIES############
+##########DEPENDENCIES#############
 
 from dronekit import connect, VehicleMode,LocationGlobalRelative,APIException
 import time
@@ -7,7 +7,8 @@ import exceptions
 import math
 import argparse
 
-############FUNCTIONS###########
+
+#########FUNCTIONS#################
 
 def connectMyCopter():
 
@@ -28,7 +29,7 @@ def connectMyCopter():
 
 def arm_and_takeoff(targetHeight):
 	while vehicle.is_armable!=True:
-		print("Waiting for vehicle to become armable")
+		print("Waiting for vehicle to become armable.")
 		time.sleep(1)
 	print("Vehicle is now armable")
 
@@ -41,7 +42,7 @@ def arm_and_takeoff(targetHeight):
 
 	vehicle.armed = True
 	while vehicle.armed==False:
-		print("Waiting for vehicle to become armed")
+		print("Waiting for vehicle to become armed.")
 		time.sleep(1)
 	print("Look out! Virtual props are spinning!!")
 
@@ -53,39 +54,12 @@ def arm_and_takeoff(targetHeight):
 			break
 		time.sleep(1)
 	print("Target altitude reached!!")
+
 	return None
 
-##########MAIN EXECUTABLE#######
+
+##########MAIN EXECUTABLE###########
 
 vehicle = connectMyCopter()
 arm_and_takeoff(10)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

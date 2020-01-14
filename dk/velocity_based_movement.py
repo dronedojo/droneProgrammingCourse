@@ -1,4 +1,4 @@
-######DEPENDENCIES############
+##########DEPENDENCIES#############
 
 from dronekit import connect, VehicleMode,LocationGlobalRelative,APIException
 import time
@@ -7,8 +7,7 @@ import exceptions
 import math
 import argparse
 from pymavlink import mavutil
-
-############FUNCTIONS###########
+#########FUNCTIONS#################
 
 def connectMyCopter():
 
@@ -29,7 +28,7 @@ def connectMyCopter():
 
 def arm_and_takeoff(targetHeight):
 	while vehicle.is_armable!=True:
-		print("Waiting for vehicle to become armable")
+		print("Waiting for vehicle to become armable.")
 		time.sleep(1)
 	print("Vehicle is now armable")
 
@@ -42,7 +41,7 @@ def arm_and_takeoff(targetHeight):
 
 	vehicle.armed = True
 	while vehicle.armed==False:
-		print("Waiting for vehicle to become armed")
+		print("Waiting for vehicle to become armed.")
 		time.sleep(1)
 	print("Look out! Virtual props are spinning!!")
 
@@ -54,6 +53,7 @@ def arm_and_takeoff(targetHeight):
 			break
 		time.sleep(1)
 	print("Target altitude reached!!")
+
 	return None
 
 ##Send a velocity command with +x being the heading of the drone.
@@ -62,29 +62,29 @@ def send_local_ned_velocity(vx, vy, vz):
 		0,
 		0, 0,
 		mavutil.mavlink.MAV_FRAME_BODY_OFFSET_NED,
-		0b0000111111000111, #-- BITMASK -> Consider only the velocities
-		0, 0, 0,        #-- POSITION
-		vx, vy, vz,     #-- VELOCITY
-		0, 0, 0,        #-- ACCELERATIONS
+		0b0000111111000111,
+		0, 0, 0,
+		vx, vy, vz,
+		0, 0, 0,
 		0, 0)
 	vehicle.send_mavlink(msg)
 	vehicle.flush()
 
-##Send a velocity command with +x being true NORTH of Earth
+##Send a velocity command with +x being the heading of the drone.
 def send_global_ned_velocity(vx, vy, vz):
-   	msg = vehicle.message_factory.set_position_target_local_ned_encode(
-		0,       # time_boot_ms (not used)
-		0, 0,    # target system, target component
-		mavutil.mavlink.MAV_FRAME_LOCAL_NED, # frame
-		0b0000111111000111, # type_mask (only speeds enabled)
+	msg = vehicle.message_factory.set_position_target_local_ned_encode(
+		0, # time_boot_ms (not used)
+		0, 0, # target system, target component
+		mavutil.mavlink.MAV_FRAME_LOCAL_NED, #frame
+		0b0000111111000111, #type_mask (only speeds enabled)
 		0, 0, 0, # x, y, z positions (not used)
 		vx, vy, vz, # x, y, z velocity in m/s
-		0, 0, 0, # x, y, z acceleration (not supported yet, ignored in GCS_Mavlink)
-		0, 0)    # yaw, yaw_rate (not supported yet, ignored in GCS_Mavlink) 
+		0, 0, 0, #x, y, z acceleration (not supported yet, ignored in GCS_Mavlink)
+		0, 0) #yaw, yaw_rate (not supported yet, ignored in GCS_Mavlink)
 	vehicle.send_mavlink(msg)
 	vehicle.flush()
 
-##########MAIN EXECUTABLE#######
+##########MAIN EXECUTABLE###########
 
 vehicle = connectMyCopter()
 arm_and_takeoff(10)
@@ -106,7 +106,9 @@ while counter<5:
 	print("Moving WEST relative to front of drone")
 	counter=counter+1
 
-counter=0
+
+time.sleep(2)
+
 while counter<5:
 	send_global_ned_velocity(5,0,0)
 	time.sleep(1)
@@ -122,8 +124,9 @@ while counter<5:
 	print("Moving TRUE WEST relative to front of drone")
 	counter=counter+1
 
+#########UP AND DOWN############
+time.sleep(2)
 
-#########UP and DOWN#############
 counter=0
 while counter<5:
 	send_local_ned_velocity(0,0,-5)
@@ -135,41 +138,8 @@ time.sleep(2)
 
 counter=0
 while counter<5:
-	send_global_ned_velocity(0,0,5)
+	send_local_ned_velocity(0,0,5)
 	time.sleep(1)
 	print("Moving DOWN")
 	counter=counter+1
-
-while True:
-	time.sleep(1)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
