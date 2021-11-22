@@ -70,7 +70,7 @@ def goto(targetLocation):
 
 	while vehicle.mode.name=="GUIDED":
 		currentDistance = get_distance_meters(targetLocation,vehicle.location.global_relative_frame)
-		if currentDistance<distanceToTargetLocation*.01:
+		if currentDistance<distanceToTargetLocation*.05:
 			print("Reached target waypoint.")
 			time.sleep(2)
 			break
